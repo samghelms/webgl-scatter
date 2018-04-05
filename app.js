@@ -7,8 +7,6 @@ const {OrbitController} = experimental;
 
 import {setParameters} from 'luma.gl';
 
-import {loadLazFile, parseLazData} from './utils/laslaz-loader';
-
 import {fetchData, parseData} from './utils/tsne-loader'
 import {mathFormatter} from './mathFormatter'
 
@@ -159,14 +157,14 @@ class Example extends PureComponent {
     // window.requestAnimationFrame(this._onUpdate);
   }
 
-  _renderLazPointCloudLayer () {
+  _renderPointCloudLayer () {
     const {points} = this.state;
     if (!points || points.length === 0) {
       return null;
     }
 
     return new ScatterplotLayer({
-      id: 'laz-point-cloud-layer',
+      id: 'point-cloud-layer',
       data: points,
       coordinateSystem: COORDINATE_SYSTEM.IDENTITY,
       getPosition: d => d.position,
@@ -194,44 +192,16 @@ class Example extends PureComponent {
           width={width}
           height={height}
           viewport={glViewport}
-          layers={[this._renderLazPointCloudLayer()]}
+          layers={[this._renderPointCloudLayer()]}
           onWebGLInitialized={this._onInitialized}
         />
       </OrbitController>
     );
   }
 
-  _renderProgressInfo() {
-    const progress = (this.state.progress * 100).toFixed(2);
-    return (
-      <div>
-        <div
-          style={{
-            position: 'absolute',
-            left: '8px',
-            bottom: '8px',
-            color: '#FFF',
-            fontSize: '15px'
-          }}
-        >
-          {this.state.progress < 1 ? (
-            <div>
-              <div>This example might not work on mobile devices due to browser limitations.</div>
-              <div>Please try checking it with a desktop machine instead.</div>
-              <div>{`Loading ${progress}% (laslaz loader by plas.io)`}</div>
-            </div>
-          ) : (
-            <div>Data source: kaarta.com</div>
-          )}
-        </div>
-      </div>
-    );
-  }
-
   _onHover (info) {
     const hoverInfo = info.index > -1 ? info : null
     if (hoverInfo !== this.state.hoverInfo) {
-      console.log('setting state')
       this.setState({hoverInfo})
     }
   }
