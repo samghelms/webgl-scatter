@@ -1,0 +1,15 @@
+GET / HTTP/1.1
+Host: localhost:9876
+Connection: Upgrade
+Pragma: no-cache
+Cache-Control: no-cache
+Upgrade: websocket
+Origin: file://
+Sec-WebSocket-Version: 13
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/65.0.3325.181 Safari/537.36
+Accept-Encoding: gzip, deflate, br
+Accept-Language: en-US,en;q=0.9
+Cookie: _xsrf=2|50d9bfd0|d72aa816aac3d3794127063a91ffda3a|1508279381; username-localhost-8888="2|1:0|10:1523538682|23:username-localhost-8888|44:Y2I5NDBkNDczNWU5NDQ0NzhjMTQ5MDY2ZmY2ZDM4NjA=|e8d0e3bb19d4176ec8741e4c8c751c4d208f02477224c0b28900fd9e95e664db"
+Sec-WebSocket-Key: cDlCh3GAljnd+lafTHaC1A==
+Sec-WebSocket-Extensions: permessage-deflate; client_max_window_bits
+

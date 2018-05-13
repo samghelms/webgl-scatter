@@ -1,9 +1,11 @@
 const {resolve} = require('path');
 const webpack = require('webpack');
+const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
+
 
 const CONFIG = {
   entry: {
-    app: resolve('./app.js')
+    app: resolve('./python-frontend.js')
   },
   devtool: 'source-maps',
   output: {

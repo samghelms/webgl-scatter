@@ -8,6 +8,7 @@ const {OrbitController} = experimental;
 import {setParameters} from 'luma.gl';
 
 import {fetchData, parseData} from './utils/tsne-loader'
+import {normalize} from './utils/normalize'
 import {mathFormatter} from './mathFormatter'
 
 const DATA_REPO = 'https://raw.githubusercontent.com/uber-common/deck.gl-data/master';
@@ -23,45 +24,7 @@ const tooltipStyle = {
   pointerEvents: 'none'
 };
 
-function normalize(points) {
-  let xMin = Infinity;
-  let yMin = Infinity;
-  let zMin = Infinity;
-  let xMax = -Infinity;
-  let yMax = -Infinity;
-  let zMax = -Infinity;
-
-  for (let i = 0; i < points.length; i++) {
-    xMin = Math.min(xMin, points[i].position[0]);
-    yMin = Math.min(yMin, points[i].position[1]);
-    zMin = Math.min(zMin, points[i].position[2]);
-    xMax = Math.max(xMax, points[i].position[0]);
-    yMax = Math.max(yMax, points[i].position[1]);
-    zMax = Math.max(zMax, points[i].position[2]);
-  }
-
-  const scale = Math.max(...[xMax - xMin, yMax - yMin, zMax - zMin]);
-  const xMid = (xMin + xMax) / 2;
-  const yMid = (yMin + yMax) / 2;
-  const zMid = (zMin + zMax) / 2;
-
-  for (let i = 0; i < points.length; i++) {
-    points[i].position[0] = (points[i].position[0] - xMid) / scale;
-    points[i].position[1] = (points[i].position[1] - yMid) / scale;
-    points[i].position[2] = (points[i].position[2] - zMid) / scale;
-  }
-}
-
-const handleHover = (info, tex) => {
-  if (!info || info.index < 0) {
-    return
-  }
-  console.log(tex[info.index])
-
-  return (<div>test</div>)
-}
-
-class Example extends PureComponent {
+class Scatter extends PureComponent {
   constructor(props) {
     super(props);
 
@@ -89,7 +52,7 @@ class Example extends PureComponent {
         minDistance: 0.5,
         maxDistance: 3
       }
-    };
+    }
   }
 
   componentWillMount() {
@@ -141,16 +104,9 @@ class Example extends PureComponent {
   _onUpdate() {
     const {viewport} = this.state;
 
-    // note: when finished dragging, _onUpdate will not resume by default
-    // to resume rotating, explicitly call _onUpdate or requestAnimationFrame
-    // if (!rotating) {
-    //   return;
-    // }
-
     this.setState({
       viewport: {
         ...viewport
-        // rotationOrbit: viewport.rotationOrbit + 1
       }
     });
 
@@ -232,7 +188,7 @@ class Example extends PureComponent {
   }
 }
 
-const root = document.createElement('div');
-document.body.appendChild(root);
+const el = document.createElement('div');
+document.body.appendChild(el);
 
-render(<Example />, root);
+render(<Scatter />, el);

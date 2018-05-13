@@ -6,20 +6,35 @@
     "start": "webpack-dev-server --progress --hot --open",
     "start-local": "webpack-dev-server --env.local --progress --hot --open",
     "build-clean": "rm -rf dist && mkdir dist",
+    "build-clean-umd": "rm -rf dist-umd && mkdir dist-umd",
     "build-script": "webpack -p",
-    "build-copy": "cp index.html dist",
-    "build": "npm run build-clean && npm run build-script && npm run build-copy && cp -r data dist && cp -r fonts dist && cp katex.min.css dist"
+    "build-script-umd": "webpack --config webpack.umd.config.js",
+    "build-copy": "cp -r data fonts index.html katex.min.css",
+    "build": "npm run build-clean && npm run build-script && npm run build-copy && cp -r data dist && cp -r fonts dist && cp katex.min.css dist",
+    "build-umd": "npm run build-clean-umd && npm run build-script-umd && npm run build-copy dist-umd",
+    "build-python": "npm run build-umd && cp dist-umd"
   },
   "dependencies": {
     "deck.gl": "^5.0.0",
     "gl-matrix": "^2.3.2",
     "is-little-endian": "0.0.0",
     "react": "^16.2.0",
-    "react-dom": "^16.2.0"
+    "react-dom": "^16.2.0",
+    "rollup": "^0.58.2",
+    "rollup-plugin-babel": "^3.0.4",
+    "rollup-plugin-node-resolve": "^3.3.0",
+    "rollup-plugin-uglify": "^3.0.0",
+    "uglify-es": "^3.3.9"
   },
   "devDependencies": {
+    "babel-core": "^6.26.0",
+    "babel-plugin-transform-react-remove-prop-types": "^0.4.13",
+    "babel-preset-env": "^1.6.1",
+    "babel-preset-react": "^6.24.1",
+    "babel-preset-stage-2": "^6.24.1",
     "buble-loader": "^0.4.1",
     "katex": "^0.9.0",
+    "uglifyjs-webpack-plugin": "^1.2.4",
     "webpack": "^2.6.1",
     "webpack-dev-server": "^2.4.5"
   }

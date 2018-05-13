@@ -1,0 +1,34 @@
+const {resolve} = require('path');
+const webpack = require('webpack');
+const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
+
+
+const CONFIG = {
+  entry: {
+    app: resolve('./python-frontend.js')
+  },
+  devtool: 'source-maps',
+  output: {
+    path: resolve('./dist-umd'),
+    filename: 'gigaGraph.bundle.js',
+    library: 'gigaGraph',
+    libraryTarget: 'umd'
+  },
+  module: {
+    rules: [
+      {
+        test: /\.js$/,
+        loader: 'buble-loader',
+        include: [resolve('.')],
+        exclude: [/node_modules/],
+        options: {
+          objectAssign: 'Object.assign'
+        }
+      }
+    ]
+  },
+  plugins: [new webpack.HotModuleReplacementPlugin()]
+};
+
+// This line enables bundling against src in this repo rather than installed deck.gl module
+module.exports = env => (env ? require('../webpack.config.local')(CONFIG)(env) : CONFIG);
