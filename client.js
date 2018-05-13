@@ -5,10 +5,6 @@ const PORT = 9876
 const ADDR = [HOST, PORT]
 const BUFSIZE = 4096
 
-// server.js
-
-"use strict";
-
 // var WebSocketServer = require("ws").Server;
 var exampleSocket = new WebSocket('ws://localhost:54286')
 

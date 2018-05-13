@@ -2,7 +2,19 @@ import React, {PureComponent} from 'react'
 import DeckGL, {COORDINATE_SYSTEM, ScatterplotLayer, experimental} from 'deck.gl'
 import {setParameters} from 'luma.gl'
 const {OrbitController} = experimental
-// import {normalize} from './utils/normalize'
+
+const PREFIX = '-webkit-'
+// browser.webkit || browser.blink ? '-webkit-' :
+// browser.gecko ? '-moz-' :
+// '';
+
+const CURSOR = {
+  GRABBING: `${PREFIX}grabbing`,
+  GRAB: 'crosshair',
+  POINTER: 'crosshair'
+}
+
+const getScatterCursor = ({isDragging}) => (isDragging ? CURSOR.GRABBING : CURSOR.GRAB)
 
 class Scatter extends PureComponent {
   constructor (props) {
@@ -57,7 +69,6 @@ class Scatter extends PureComponent {
 
   _onViewportChange (viewport) {
     this.setState({
-      // rotating: !viewport.isDragging,
       viewport: {...this.state.viewport, ...viewport}
     })
   }
@@ -72,7 +83,6 @@ class Scatter extends PureComponent {
       offsetLeft: this.props.parentRef.offsetLeft,
       offsetTop: this.props.parentRef.offsetTop
     })
-
     // window.requestAnimationFrame(this._onUpdate);
   }
 
@@ -105,6 +115,7 @@ class Scatter extends PureComponent {
         ref={canvas => {
           this._canvas = canvas
         }}
+        getCursor={getScatterCursor}
         onViewportChange={this._onViewportChange}
       >
         <DeckGL
@@ -139,9 +150,11 @@ class Scatter extends PureComponent {
   }
 
   render () {
-    const {width, height} = this.state;
+    const {width, height} = this.state
+    document.getElementById("scatter").style.cursor = "crosshair";
+
     if (width <= 0 || height <= 0) {
-      return null;
+      return null
     }
 
     return (
@@ -149,7 +162,7 @@ class Scatter extends PureComponent {
         {this._renderDeckGLCanvas()}
         {this._renderHoverInfo()}
       </div>
-    );
+    )
   }
 }
 

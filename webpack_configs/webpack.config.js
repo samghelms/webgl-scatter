@@ -1,7 +1,6 @@
-const {resolve} = require('path');
-const webpack = require('webpack');
-const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
-
+import { resolve } from 'path'
+import { HotModuleReplacementPlugin } from 'webpack'
+// import UglifyJSPlugin from 'uglifyjs-webpack-plugin'
 
 const CONFIG = {
   entry: {
@@ -25,8 +24,8 @@ const CONFIG = {
       }
     ]
   },
-  plugins: [new webpack.HotModuleReplacementPlugin()]
-};
+  plugins: [new HotModuleReplacementPlugin()]
+}
 
 // This line enables bundling against src in this repo rather than installed deck.gl module
-module.exports = env => (env ? require('../webpack.config.local')(CONFIG)(env) : CONFIG);
+export default function (env) { return (env ? require('../webpack.config.local')(CONFIG)(env) : CONFIG) }

@@ -3,6 +3,7 @@
   "version": "0.0.1",
   "license": "MIT",
   "scripts": {
+    "example-plain-js": "cp katex.min.css examples/example_plain_js/dist/katex.min.css && cp examples/example_plain_js/example_plain_js.html examples/example_plain_js/dist/index.html && webpack-dev-server --config webpack_configs/webpack.plainjs.config.babel.js --content-base examples/example_plain_js/dist --progress --hot --open",
     "start": "webpack-dev-server --progress --hot --open",
     "start-local": "webpack-dev-server --env.local --progress --hot --open",
     "build-clean": "rm -rf dist && mkdir dist",
@@ -29,11 +30,12 @@
   "devDependencies": {
     "babel-core": "^6.26.0",
     "babel-plugin-transform-react-remove-prop-types": "^0.4.13",
-    "babel-preset-env": "^1.6.1",
+    "babel-preset-env": "^1.7.0",
     "babel-preset-react": "^6.24.1",
     "babel-preset-stage-2": "^6.24.1",
     "buble-loader": "^0.4.1",
     "katex": "^0.9.0",
+    "standard": "^11.0.1",
     "uglifyjs-webpack-plugin": "^1.2.4",
     "webpack": "^2.6.1",
     "webpack-dev-server": "^2.4.5"
